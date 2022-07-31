@@ -54,6 +54,21 @@ function toggleDice(id){
   const dieElements = dice.map(item => (
     <Die toggle={()=> toggleDice(item.id)} isHeld={item.isHeld} key={item.id} value={item.value}  />
   ))
+
+  function newGame(){
+    setDice(diceVal => {
+      if (result === true && result2 === true){
+        const diceArray = []
+        for(let i = 0; i < 10; i++) {
+          diceArray.push(diceObj())
+        }
+      return diceArray
+      }
+    } 
+  )
+  setTenzies(false) 
+}
+  console.log(tenzies)
   return (
     <main className="game-frame">
       {tenzies === true && <Confetti />}
@@ -62,7 +77,7 @@ function toggleDice(id){
      <div className="grid-container">
         {dieElements}
      </div> 
-     <button className="btn-1" onClick={roll}>{tenzies === true ? 'New Game' : 'Roll'}</button>
+     <button className="btn-1" onClick={tenzies ? newGame : roll}>{tenzies ? 'New Game' : 'Roll'}</button>
     </main>
   )
 }

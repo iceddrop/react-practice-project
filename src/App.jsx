@@ -103,7 +103,7 @@ function toggleDice(id){
       <h1 className="game-title">Tenzies</h1>
       <p>{duration}</p>
           <p>{JSON.parse(localStorage.getItem('bestTime'))}</p>
-      <p className="game-instruction">Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
+      <p className="game-instruction">roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
      <div className="grid-container">
         {dieElements}
      </div> 

@@ -3,7 +3,7 @@ import './App.css'
 import Die from './components/Die'
 import {nanoid} from 'nanoid'
 import Confetti from 'react-confetti'
-
+import Timer from './components/timer'
 function App() {
 
   function diceObj(){
@@ -69,15 +69,47 @@ function toggleDice(id){
   setTenzies(false) 
 }
   console.log(tenzies)
+
+  const [inc, setInc] = React.useState(0);
+  function noOfClick(){
+    setInc(prevCount => prevCount + 1)
+  }
+
+  React.useEffect(() =>{
+    if(tenzies === true){
+      setInc(0)
+    }
+  },[tenzies])
+  
+  const [duration, setDuration] = React.useState(0)
+  const [bestTime, setBestTime] = React.useState(0)
+
+
+  const what = React.useEffect(() =>{
+     if(tenzies === false){
+       setTimeout(() =>setDuration(prevTime => prevTime + 1), 1000)
+     }else if(tenzies === true){
+      setDuration(0)
+     }
+     if(bestTime < duration){
+      setBestTime(duration)
+  }
+    localStorage.setItem('bestTime', JSON.stringify(bestTime))
+  },[duration])
+
   return (
     <main className="game-frame">
       {tenzies === true && <Confetti />}
       <h1 className="game-title">Tenzies</h1>
+      <p>{duration}</p>
+          <p>{JSON.parse(localStorage.getItem('bestTime'))}</p>
       <p className="game-instruction">Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
      <div className="grid-container">
         {dieElements}
      </div> 
-     <button className="btn-1" onClick={tenzies ? newGame : roll}>{tenzies ? 'New Game' : 'Roll'}</button>
+     <button className="btn-1" onClick={tenzies ? () => { newGame() ; what} : () => { roll() ; noOfClick()}}>{tenzies ? 'New Game' : 'Roll'}</button>
+     <h6>{inc}</h6>
+    
     </main>
   )
 }
